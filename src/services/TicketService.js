@@ -24,3 +24,9 @@
   export const getAllTickets = () =>{
     return  queue;
   }
+
+  export const clear = ()=> {
+    queue = []
+    counter = 1
+    getIo().sockets.emit('queue',queue)
+  }
