@@ -15,6 +15,7 @@ import {  createTicket as create, getAllTickets as getAll,nextTicket as next, cl
   }
 
   export const clearList = (req,res) => {
-    clear();
+    const response = clear();
+    res.status(200).send(response)
   }
 

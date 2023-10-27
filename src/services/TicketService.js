@@ -29,4 +29,5 @@
     queue = []
     counter = 1
     getIo().sockets.emit('queue',queue)
+    return queue
   }
