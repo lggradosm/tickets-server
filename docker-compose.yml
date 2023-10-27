@@ -1,0 +1,6 @@
+version: '1'
+services:
+  app:
+    image: api_server
+    ports:
+      -"3000":"3000"
