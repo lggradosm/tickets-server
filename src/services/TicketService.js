@@ -1,15 +1,17 @@
 
-  import {getIo} from '../socket.js'
+  import { Ticket } from '../models/Ticket.js'
+import {getIo} from '../socket.js'
   let queue = [];
   let counter = 1;
  
 
-  export const createTicket =  (req) => {
+  export const createTicket =  () => {
     const code = counter.toString().padStart(5,'0')
-     queue.push( {'id':code})
+    const ticket = new Ticket(code)
+     queue.push(ticket)
      counter ++;
      getIo().sockets.emit('queue',queue)
-    return  {'id':code}
+    return  ticket
   }
 
   export const nextTicket  = () => {
