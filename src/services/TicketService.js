@@ -33,3 +33,10 @@ import {getIo} from '../socket.js'
     getIo().sockets.emit('queue',queue)
     return queue
   }
+
+  export const setTicket = (ticketId)=> {
+    queue = []
+    counter = ticketId-1
+    getIo().sockets.emit('queue',queue)
+    return queue
+  }

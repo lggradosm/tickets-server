@@ -1,4 +1,5 @@
-import {  createTicket as create, getAllTickets as getAll,nextTicket as next, clear} from "../services/TicketService.js"
+import e from "express"
+import {  createTicket as create, getAllTickets as getAll,nextTicket as next, clear, setTicket as set} from "../services/TicketService.js"
   export const createTicket = (req,res) => {
     const response = create(req)
     res.send(response)
@@ -16,6 +17,12 @@ import {  createTicket as create, getAllTickets as getAll,nextTicket as next, cl
 
   export const clearList = (req,res) => {
     const response = clear();
+    res.status(200).send(response)
+  }
+  
+  export const setTicket = (req,res) => {
+    const ticketId = req.body;
+    const response = set(ticketId)
     res.status(200).send(response)
   }
 
