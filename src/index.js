@@ -6,8 +6,9 @@ import {initializeSocketServer} from './socket.js'
 const app = express();
 const httpServer = createServer(app)
 initializeSocketServer(httpServer)
-
+app.use(express.json())
 app.use(cors({origin:'*'}))
+
 app.use('/tickets',router)
 
 

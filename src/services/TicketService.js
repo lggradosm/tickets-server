@@ -36,7 +36,7 @@ import {getIo} from '../socket.js'
 
   export const setTicket = (ticketId)=> {
     queue = []
-    counter = ticketId-1
+    counter = ticketId
     getIo().sockets.emit('queue',queue)
     return queue
   }
