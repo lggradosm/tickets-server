@@ -1,42 +1,19 @@
-
-  import { Ticket } from '../models/Ticket.js'
-import {getIo} from '../socket.js'
-  let queue = [];
-  let counter = 1;
- 
-
-  export const createTicket =  () => {
-    const code = counter.toString().padStart(5,'0')
-    const ticket = new Ticket(code)
-     queue.push(ticket)
-     counter ++;
-     getIo().sockets.emit('queue',queue)
-    return  ticket
+import mongoose from "mongoose";
+import { Ticket } from "../models/Ticket.js";
+import { QueueService } from "./QueueService.js";
+export class TicketService {
+  async create(ticket) {
+    ticket._id = new mongoose.Types.ObjectId();
+    const queueService = new QueueService();
+    const queueCounter = await queueService.getByProcedure(ticket.procedure);
+    ticket.code = queueCounter.initials + (queueCounter.counter + 1) + "";
+    await Ticket(ticket).save();
+    const newTicket = await Ticket.findById(ticket._id);
+    await queueService.addTicket(ticket.procedure, ticket._id);
+    return newTicket;
   }
 
-  export const nextTicket  = () => {
-    if( queue === null) return []
-    const ticket =  queue[0]
-    if(queue.length < 1) return []
-    queue.shift();
-    getIo().sockets.emit('queue',queue)
-    return ticket
+  async getAll() {
+    return Ticket.find({}).populate("procedure").exec();
   }
-
-  export const getAllTickets = () =>{
-    return  queue;
-  }
-
-  export const clear = ()=> {
-    queue = []
-    counter = 1
-    getIo().sockets.emit('queue',queue)
-    return queue
-  }
-
-  export const setTicket = (ticketId)=> {
-    queue = []
-    counter = ticketId
-    getIo().sockets.emit('queue',queue)
-    return queue
-  }
+}

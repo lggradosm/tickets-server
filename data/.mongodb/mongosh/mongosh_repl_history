@@ -1,0 +1,34 @@
+show dbs
+sho dbs
+use database guerra_db
+show databases
+exit
+mongosh
+mongosh --version
+mongo admin -u root -p example
+mongo -u root -password pass123 --authenticationDatabase admin
+show databases
+use admin
+mongo
+--username guerrasalas --password notariaguerra
+show databases
+db
+mongo
+mongod
+mongo -u guerrasalas -p notariaguerra
+mongo username.guerrasalas -p notariaguerra
+mongo -u guerrasalas -p notariaguerra
+--host localhost -u guerrasalas -p notariaguerra
+cls
+clear
+-help
+help
+--help
+?
+show dbs;
+use admin
+show dbs;
+mongo -u "guerrasalas" -p "notariaguerra" dbs;
+use admin
+show dbs;
+mongo -u "guerrasalas" -p "notariaguerra"

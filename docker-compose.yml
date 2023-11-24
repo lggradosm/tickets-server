@@ -1,6 +1,10 @@
-version: '1'
+version: "3.8"
 services:
-  app:
-    image: api_server
+  mongodb:
+    image: mongo:6-jammy
     ports:
-      - 3000:3000
+      - "27017:27017"
+    volumes:
+      - dbdata6:/data/db
+volumes:
+  dbdata6:
