@@ -11,5 +11,5 @@ const router = express.Router();
 router.get("", getAll);
 router.post("", create);
 router.post("/login", signIn);
-router.post("/verify", verifyToken, verify);
+router.post("/verify", verify);
 export default router;

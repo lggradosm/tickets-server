@@ -17,7 +17,7 @@ export default class ProcedureController {
       const procedures = await procedureService.getAll();
       res.send(procedures);
     } catch (err) {
-      res.status(500).json({ error: error.message });
+      res.status(500).json({ error: err.message });
     }
   }
 }

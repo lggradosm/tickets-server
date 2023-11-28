@@ -31,7 +31,8 @@ export const signIn = async (req, res) => {
 };
 
 export const verify = async (req, res) => {
-  const { token } = req;
+  const { token } = req.body;
+  console.log(token);
   const user = await verifyToken(token);
   res.json(user);
 };
