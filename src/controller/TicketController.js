@@ -6,6 +6,7 @@ export class TicketController {
     const ticket = req.body;
     try {
       const newTicket = await ticketService.create(ticket);
+      console.log(newTicket);
       res.json(newTicket);
     } catch (error) {
       res.status(500).json({ error: error.message });

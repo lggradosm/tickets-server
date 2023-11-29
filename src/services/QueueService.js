@@ -13,8 +13,11 @@ export class QueueService {
     return await Queue.create(queue);
   }
 
-  async getById(id) {
-    return await Queue.findById(id);
+  async getByProcedureId(id) {
+    return await Queue.findOne({ procedure: id })
+      .populate("procedure")
+      .populate("ticket")
+      .exec();
   }
 
   async getByProcedure(procedure) {
@@ -27,5 +30,9 @@ export class QueueService {
       { $push: { ticket: ticket }, $inc: { counter: 1 } },
       { new: true }
     );
+  }
+
+  async nextTicket() {
+    return null;
   }
 }

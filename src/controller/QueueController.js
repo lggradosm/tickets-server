@@ -22,11 +22,11 @@ export class QueueController {
     }
   }
 
-  async getById(req, res) {
+  async getByProcedureId(req, res) {
     const queueService = new QueueService();
     const id = req.params.id;
     try {
-      const queue = await queueService.getById(id);
+      const queue = await queueService.getByProcedureId(id);
       res.json(queue);
     } catch (err) {
       res.status(500).json({ error: err.message });
@@ -38,6 +38,7 @@ export class QueueController {
     const queueService = new QueueService();
     try {
       const queue = await queueService.addTicket(procedure, ticket);
+      console.log(queue);
       res.json(queue);
     } catch (err) {
       res.status(500).json({ error: err.message });

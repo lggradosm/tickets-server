@@ -33,6 +33,8 @@ export const signIn = async (req, res) => {
 export const verify = async (req, res) => {
   const { token } = req.body;
   console.log(token);
+  if (!token) return null;
   const user = await verifyToken(token);
+  console.log(user);
   res.json(user);
 };

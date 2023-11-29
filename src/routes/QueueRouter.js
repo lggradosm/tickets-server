@@ -5,7 +5,7 @@ const router = express.Router();
 const queueController = new QueueController();
 router.post("/", queueController.save);
 router.get("/", queueController.getAll);
-router.get("/:id", queueController.getById);
+router.get("/:id", queueController.getByProcedureId);
 router.post("/add", queueController.addTicket);
 
 export default router;
