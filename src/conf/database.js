@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
 
 export const connect = () => {
-  const MONGO_DATABASE = process.env.MONGO_DATABASE;
-  const MONGO_HOST = process.env.MONGO_HOST;
-  const MONGO_PORT = process.env.MONGO_PORT;
+  const MONGO_DATABASE = "guerrasalas_db"
+  const MONGO_HOST = "mongodb";
+  const MONGO_PORT = 27017;
+
   const MONGO_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
   
   mongoose

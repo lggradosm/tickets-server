@@ -7,5 +7,22 @@ services:
       - "27017:27017"
     volumes:
       - dbdata6:/data/db
+    networks:
+      - my-network
+
+  nodejs:
+    build: .
+    container_name: tickets-server
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
+
 volumes:
   dbdata6:

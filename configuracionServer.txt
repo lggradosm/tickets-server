@@ -1,0 +1,5 @@
+SERVER:
+docker build -t tickets-server:tag .
+docker-compose up -d
+CLIENT:
+docker run --name tickets-client -p 5173:5173 -d tickets-client:tag
