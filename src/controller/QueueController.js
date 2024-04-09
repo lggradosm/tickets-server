@@ -38,7 +38,17 @@ export class QueueController {
     const queueService = new QueueService();
     try {
       const queue = await queueService.addTicket(procedure, ticket);
-      console.log(queue);
+      res.json(queue);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+
+  async next(req,res) {
+    const procedureId = req.params.id;
+    const queueService = new QueueService();
+    try {
+      const queue = await queueService.nextTicket(procedureId);
       res.json(queue);
     } catch (err) {
       res.status(500).json({ error: err.message });

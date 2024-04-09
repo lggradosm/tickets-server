@@ -1,12 +1,11 @@
 import { TicketService } from "../services/TicketService.js";
-
+import {getIo} from "../util/socket.js"
 export class TicketController {
   async create(req, res) {
     const ticketService = new TicketService();
     const ticket = req.body;
     try {
       const newTicket = await ticketService.create(ticket);
-      console.log(newTicket);
       res.json(newTicket);
     } catch (error) {
       res.status(500).json({ error: error.message });
@@ -22,4 +21,5 @@ export class TicketController {
       res.status(500).json({ error: error.message });
     }
   }
+
 }

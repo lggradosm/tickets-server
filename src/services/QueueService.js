@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { Queue } from "../models/Queue.js";
 import { ProcedureService } from "./ProcedureService.js";
+import { getIo } from "../util/socket.js"
 export class QueueService {
+  io = getIo()
   async getAll() {
     return await Queue.find().populate("procedure").exec();
   }
@@ -25,14 +27,35 @@ export class QueueService {
   }
 
   async addTicket(procedure, ticket) {
-    return await Queue.findOneAndUpdate(
+    return await Queue.findOneAndUpdate(    
       { procedure: procedure },
       { $push: { ticket: ticket }, $inc: { counter: 1 } },
       { new: true }
-    );
+    ).populate("ticket");
   }
 
-  async nextTicket() {
-    return null;
+  async nextTicket(procedureId) {
+    try{
+      const queue = await Queue.findOne({ procedure: procedureId }).populate("ticket");
+      if (!queue) {
+        throw new Error('No se encontró la cola para el procedimiento especificado.');
+      }
+      if(queue.ticket.length>0){
+        const ticket = queue.ticket[0];
+        if(queue.ticket.length === 1){
+          queue.ticket = [];
+        }else{
+          queue.ticket.shift();
+        }
+        const queueList = await queue.save();
+        this.io.to(procedureId).emit("queue",queueList);
+        return ticket;
+      }
+      return null;
+    }catch(err){
+      console.error(err);
+      throw err;
+    }
+    return null
   }
 }

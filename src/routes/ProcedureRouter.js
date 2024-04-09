@@ -3,6 +3,5 @@ import ProcedureController from "../controller/ProcedureController.js";
 const router = express.Router();
 const procedureController = new ProcedureController();
 router.get("", procedureController.getAll);
-router.post("", procedureController.add);
-
+router.get("/:id",procedureController.getById)
 export default router;

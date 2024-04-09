@@ -5,6 +5,12 @@ export const initializeSocketServer = (httpServer) => {
   io = new Server(httpServer, { cors: { origin: "*" } });
   io.on("connection", (socket) => {
     console.log("user conection");
+
+    socket.on('joinRoom', roomName => {
+      socket.join(roomName);
+      console.log(`Client joined room: ${roomName}`);
+    });
+    
     socket.on("disconnect", () => {
       console.log("user disconnected");
     });

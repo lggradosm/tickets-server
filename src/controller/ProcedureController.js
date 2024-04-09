@@ -20,4 +20,15 @@ export default class ProcedureController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  async getById(req,res) {
+    const procedureService = new ProcedureService();
+    const id = req.params.id;
+    try {
+      const procedure = await procedureService.getById(id);
+      res.json(procedure);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
 }
