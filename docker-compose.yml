@@ -9,7 +9,6 @@ services:
       - dbdata6:/data/db
     networks:
       - my-network
-
   nodejs:
     build: .
     container_name: tickets-server
@@ -19,10 +18,8 @@ services:
       - mongodb
     networks:
       - my-network
-
 networks:
   my-network:
     driver: bridge
-
 volumes:
   dbdata6:

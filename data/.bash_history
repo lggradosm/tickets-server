@@ -1,9 +1,6 @@
-mongo
-exit
-mongo
-use admin
-show dbs;
-exit
-mongo
-show databases
+ls
+cd data
+ls
+cd db
+ls
 exit
