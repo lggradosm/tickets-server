@@ -54,4 +54,19 @@ export class QueueController {
       res.status(500).json({ error: err.message });
     }
   }
+
+  async resetQueue(req,res){
+    const {password} = req.body
+    const queueService = new QueueService();
+    try {
+      const queue = await queueService.resetQueues(password);
+      if(queue !== null) {
+        res.json(200);
+      }else{
+        res.json(400);
+      }
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
 }

@@ -58,4 +58,18 @@ export class QueueService {
     }
     return null
   }
+
+  async resetQueues(password){
+    if(password ==="notariaguerra"){
+      const queueList = await Queue.updateMany(    
+        {},
+        { $set: { ticket: [], counter:0}},
+        { new: true }
+      );
+      const queue = await Queue.find();
+      this.io.emit("reset",queue);
+      return queue;
+    }
+    return null;
+  }
 }

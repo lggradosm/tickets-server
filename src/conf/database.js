@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 export const connect = () => {
   const MONGO_DATABASE = "guerrasalas_db"
-  const MONGO_HOST = "mongodb";
+  const MONGO_HOST = "174.129.115.99";
   const MONGO_PORT = 27017;
 
   const MONGO_URI = `mongodb://${MONGO_HOST}:${MONGO_PORT}/${MONGO_DATABASE}`;
