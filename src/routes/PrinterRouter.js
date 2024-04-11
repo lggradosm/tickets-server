@@ -5,4 +5,6 @@ import { PrinterController } from "../controller/PrinterController.js"
   const printerController = new PrinterController();
 
   router.get("", printerController.getIp);
+  router.post("/", printerController.changeIp);
+
   export default router;
