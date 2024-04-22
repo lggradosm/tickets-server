@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 import { Queue } from "../models/Queue.js";
 import { ProcedureService } from "./ProcedureService.js";
-import { getIo } from "../util/socket.js"
+import { getIo } from "../util/socket.js";
 export class QueueService {
-  io = getIo()
+  io = getIo();
   async getAll() {
     return await Queue.find().populate("procedure").exec();
   }
@@ -27,47 +27,49 @@ export class QueueService {
   }
 
   async addTicket(procedure, ticket) {
-    return await Queue.findOneAndUpdate(    
+    return await Queue.findOneAndUpdate(
       { procedure: procedure },
       { $push: { ticket: ticket }, $inc: { counter: 1 } },
       { new: true }
     ).populate("ticket");
   }
 
-  async nextTicket(procedureId) {
-    try{
-      const queue = await Queue.findOne({ procedure: procedureId }).populate("ticket");
+  async nextTicket(procedureId, ventanilla) {
+    try {
+      const queue = await Queue.findOne({ procedure: procedureId }).populate(
+        "ticket"
+      );
       if (!queue) {
-        throw new Error('No se encontró la cola para el procedimiento especificado.');
+        throw new Error(
+          "No se encontró la cola para el procedimiento especificado."
+        );
       }
-      if(queue.ticket.length>0){
+      if (queue.ticket.length > 0) {
         const ticket = queue.ticket[0];
-        if(queue.ticket.length === 1){
-          queue.ticket = [];
-        }else{
-          queue.ticket.shift();
-        }
+        this.io.emit("mensaje", { code: ticket.code, ventanilla: ventanilla });
+
+        queue.ticket.shift();
+
         const queueList = await queue.save();
-        this.io.to(procedureId).emit("queue",queueList);
+        this.io.to(procedureId).emit("queue", queueList);
         return ticket;
       }
       return null;
-    }catch(err){
+    } catch (err) {
       console.error(err);
       throw err;
     }
-    return null
   }
 
-  async resetQueues(password){
-    if(password ==="notariaguerra"){
-      const queueList = await Queue.updateMany(    
+  async resetQueues(password) {
+    if (password === "notariaguerra") {
+      const queueList = await Queue.updateMany(
         {},
-        { $set: { ticket: [], counter:0}},
+        { $set: { ticket: [], counter: 0 } },
         { new: true }
       );
       const queue = await Queue.find();
-      this.io.emit("reset",queue);
+      this.io.emit("reset", queue);
       return queue;
     }
     return null;

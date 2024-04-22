@@ -7,6 +7,6 @@ router.post("/", queueController.save);
 router.get("/", queueController.getAll);
 router.get("/:id", queueController.getByProcedureId);
 router.post("/add", queueController.addTicket);
-router.get("/next/:id",queueController.next)
+router.post("/next",queueController.next)
 router.post("/reset",queueController.resetQueue)
 export default router;
