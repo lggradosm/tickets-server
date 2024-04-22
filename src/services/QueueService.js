@@ -47,7 +47,7 @@ export class QueueService {
       if (queue.ticket.length > 0) {
         const ticket = queue.ticket[0];
         this.io.emit("mensaje", { code: ticket.code, ventanilla: ventanilla });
-
+        console.log(ticket.code)
         queue.ticket.shift();
 
         const queueList = await queue.save();
